@@ -1,5 +1,6 @@
 
 import { EventEmitter, Injectable } from "@angular/core";
+import { Subject } from "rxjs";
 import { Ingredient } from "../shared/indredient.model";
 import { ShoppingListService } from "../shopping-list/shopping-list.service";
 import { Recipe } from "./recipe.model";
@@ -8,7 +9,9 @@ import { Recipe } from "./recipe.model";
 As if we want to inject service into a service we need to add @injectable*/
 export class RecipeService{
 
-    recipeSelected=new EventEmitter<Recipe>()
+    // recipeSelected=new EventEmitter<Recipe>()
+    
+
 
     private recipes:Recipe[]=[
         new Recipe(
@@ -40,6 +43,10 @@ export class RecipeService{
     copy of the one in this service file. So therefore, we really can't access the recipes array stored here from outside,we only
     get a copy.*/
 }
+
+    getRecipe(index:number){
+        return this.recipes[index];
+    }
 
 addIngredientsToShoppingList(ingredirents:Ingredient[]){
     this.slService.addIngredients(ingredirents)

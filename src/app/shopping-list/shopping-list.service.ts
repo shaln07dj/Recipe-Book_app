@@ -1,8 +1,13 @@
 import { EventEmitter } from "@angular/core";
 import { Ingredient } from "../shared/indredient.model";
-
+import { Subject } from "rxjs";
 export class ShoppingListService{
-    ingridentsChanged=new EventEmitter<Ingredient[]>();/*we basically have to inform our component that new
+    
+    ingridentsChanged=new Subject<Ingredient[]>();
+    
+    // ingridentsChanged=new EventEmitter<Ingredient[]>();
+
+    /*we basically have to inform our component that new
     data is avaliable.So here I'm simply adding a new emitter.
     This event emitter now can emit our ingredient array,so the type it will pass on is an array of ingredients.... 
     */ 
@@ -17,8 +22,15 @@ getIngredients(){
 
 addIngredient(ingredient:Ingredient){
     this.ingredients.push(ingredient)
-    this.ingridentsChanged.emit(this.ingredients.slice())/*....and now here whenever we change and emit a new event
+
+
+
+    // this.ingridentsChanged.emit(this.ingredients.slice())
+    /*....and now here whenever we change and emit a new event
     an dwe ofcourse pass a value here, our opiginal ingredients array, only a copy of it.  */
+
+    this.ingridentsChanged.next(this.ingredients.slice())
+
 
 }
 
@@ -27,7 +39,10 @@ addIngredients(ingredients:Ingredient[]){
     //     this.addIngredient(ingredient)
     // }
     this.ingredients.push(...ingredients)
-    this.ingridentsChanged.emit(this.ingredients.slice())
+    // this.ingridentsChanged.emit(this.ingredients.slice())
+    this.ingridentsChanged.next(this.ingredients.slice())
+
+
 
 }
 
