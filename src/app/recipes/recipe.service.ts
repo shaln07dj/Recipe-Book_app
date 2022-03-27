@@ -36,6 +36,14 @@ export class RecipeService{
     constructor(private slService:ShoppingListService){
 
     }
+    
+    setRecipes(recipe:Recipe[]){
+        this.recipes=recipe;
+        
+        this.recipesChanged.next(this.recipes.slice());
+       
+    }
+
     getRecipes(){
     return this.recipes.slice();/*If we do it simply without slice,I actually return the direct reference to this array and since
     arrays and objects are reference types in Javascript ,well if we now change something on this array,we will change  it on the 
@@ -64,7 +72,7 @@ updateRecipe(index:number,newRecipe:Recipe){
 }
 
 deleteRecipe(index:number){
-    this.recipes.splice(index)
+    this.recipes.splice(index,1)
     this.recipesChanged.next(this.recipes.slice());
 }
 }
