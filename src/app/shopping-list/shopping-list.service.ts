@@ -4,6 +4,8 @@ import { Subject } from "rxjs";
 export class ShoppingListService{
     
     ingridentsChanged=new Subject<Ingredient[]>();
+
+    startedEditing=new Subject<Number>();
     
     // ingridentsChanged=new EventEmitter<Ingredient[]>();
 
@@ -19,6 +21,10 @@ private ingredients:Ingredient[]=[
 getIngredients(){
     return this.ingredients.slice();
 }
+    getIngredient(index:number){
+        return this.ingredients[index];
+
+    }
 
 addIngredient(ingredient:Ingredient){
     this.ingredients.push(ingredient)
@@ -42,8 +48,16 @@ addIngredients(ingredients:Ingredient[]){
     // this.ingridentsChanged.emit(this.ingredients.slice())
     this.ingridentsChanged.next(this.ingredients.slice())
 
+}
+updateIngerdient(index:number,newIngredient:Ingredient){
+    this.ingredients[index] =newIngredient;
+    this.ingridentsChanged.next(this.ingredients.slice());
+}
 
-
+deleteIngredient(index:number){
+    this.ingredients.splice(index,1)/*splice allows us to start at a specific point, for example at index here and then
+    splice one element, thus removing it.*/
+    this.ingridentsChanged.next(this.ingredients.slice())
 }
 
 }
